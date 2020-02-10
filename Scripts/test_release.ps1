@@ -24,7 +24,7 @@
 param(
     
 	[Parameter(Mandatory)]
-	[ValidatePattern('7\.[234]|7\.[234]\.\d')]
+	[ValidateSet('7.2','7.3', '7.4')]
 	[string]$Branch,
 	[Parameter(Mandatory)]
 	[ValidateSet('x86','x64')]
@@ -40,6 +40,8 @@ begin {
 
 	Set-PHPEnvironmentVariables
 
+	$revision = get-revision
+
 	$build="vc15"
 
 	if ($thread = "TS") {
@@ -50,8 +52,11 @@ begin {
 	}
 
 	$latest = $false
-	if (('7.2','7.3','7.4') -contains $branch) {
+	if ($revision -eq "latest") {
 		$latest=$true
+	}
+	else {
+		$branch = $revision
 	}
 
 	$test_pack="php-test-pack-$branch"
