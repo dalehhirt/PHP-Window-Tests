@@ -468,3 +468,41 @@ function Merge-Extensions {
     
   }
 }
+
+<#
+.SYNOPSIS
+  Get the revision to test
+.DESCRIPTION
+  This script will check for the existence of a given environmental variable, and return the default value if it doesn't find it.
+.PARAMETER RevisionName
+  The revision environmental variable name.  Defaults to "Revision".
+.PARAMETER defaultValue
+  Default value to return.  Returns "latest" if not found.
+.EXAMPLE
+  Get-Revision
+.NOTES
+  Make sure to manually put in a pipeline variable called Revision.
+#>
+function Get-Revision {
+  [CmdletBinding()]
+  param (
+    [string]$RevisionName = "Revision",
+    [string]$defaultValue = "latest"
+  )
+  
+  begin {
+    $revisionPath=(join-path "env:\" $RevisionName)
+  }
+  
+  process {
+    if(Test-Path $revisionPath) {
+      get-item $revisionPath
+    }
+    else {
+      $defaultValue
+    }
+  }
+  end {
+    
+  }
+}

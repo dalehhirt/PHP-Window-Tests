@@ -34,7 +34,6 @@ param(
 	[Parameter(Mandatory)]
 	[ValidateSet('NTS','TS')]
 	[string]$thread,
-	[string]$revision = "latest",
 	[switch]$pause
 )
 begin {
@@ -45,6 +44,8 @@ begin {
 
 	$build="vc15"
 	$buildNeeded = "$thread-windows-$build-$cpu"
+
+	$revision = get-revision
 
 	# Get version information
 	if($revision -eq "latest") {
