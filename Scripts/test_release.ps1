@@ -112,21 +112,24 @@ begin {
 		Restore-PhpDownload -Uri $build_link -LocalPath $local_path
 	}
 	elseif ($true -eq $latest) {
+		write-host ">>> Preparing $buildDirectory" 
 		$build_link="https://windows.php.net/downloads/releases/latest/$build_pack.zip"
-		Validate-Latest -Uri $build_link - $local_path -
+
+		Restore-PhpDownload -Uri $build_link -LocalPath $local_path
 	}
 
 	$local_path = (join-path $env:PHP_CACHE "$test_pack.zip")
 	if (!(Test-Path $testDirectory) -and ($false -eq $latest)) {
 		write-host ">>> Preparing $testDirectory"
 		$test_pack_link="https://windows.php.net/downloads/releases/$test_pack.zip"
-		if ($true -eq $latest) {
-		}
 
 		Restore-PhpDownload -Uri $test_pack_link -LocalPath $local_path
 	}
 	elseif ($true -eq $latest) {
+		write-host ">>> Preparing $testDirectory"
 		$test_pack_link="https://windows.php.net/downloads/releases/latest/$test_pack.zip"
+
+		Restore-PhpDownload -Uri $test_pack_link -LocalPath $local_path
 	}
 
 	# Check to see if we have set the CLEANRESULTS
