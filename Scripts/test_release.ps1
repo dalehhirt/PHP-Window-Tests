@@ -54,6 +54,9 @@ begin {
 	$latest = $false
 	if ($revision -eq "latest") {
 		$latest=$true
+
+		# Override this and ALWAYS run the latest bits.
+		Set-EnvironmentVariable -VariableName "CLEANDIRECTORIES" -VariableValue "true"
 	}
 	else {
 		$branch = $revision
